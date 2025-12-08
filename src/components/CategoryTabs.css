@@ -7,6 +7,8 @@
     margin-bottom: 0;
     flex-wrap: nowrap;
     justify-content: center;
+    min-width: 0;
+    flex-shrink: 1;
 }
 
 .category-tab {
@@ -25,7 +27,8 @@
     border-radius: 6px;
     transition: all 0.2s ease;
     white-space: nowrap;
-    min-width: 140px;
+    min-width: 0;
+    flex: 1 1 auto;
 }
 
 .category-tab:hover {
@@ -52,16 +55,19 @@
 @media (max-width: 768px) {
     .category-tabs {
         padding: 3px;
+        flex-wrap: wrap;
     }
 
     .category-tab {
-        padding: 10px 16px;
-        font-size: 10px;
-        gap: 6px;
+        padding: 10px 12px;
+        font-size: 9px;
+        gap: 4px;
+        flex: 1 1 auto;
+        min-width: 0;
     }
 
     .category-icon {
-        font-size: 12px;
+        font-size: 11px;
     }
 }
 
@@ -70,12 +76,18 @@
     .category-tabs {
         padding: 3px;
         gap: 1px;
+        flex-wrap: wrap;
     }
 
     .category-tab {
-        padding: 10px 12px;
-        font-size: 9px;
-        min-width: 110px;
-        gap: 4px;
+        padding: 8px 10px;
+        font-size: 8px;
+        min-width: 0;
+        gap: 3px;
+        flex: 1 1 auto;
+    }
+
+    .category-icon {
+        font-size: 10px;
     }
 }

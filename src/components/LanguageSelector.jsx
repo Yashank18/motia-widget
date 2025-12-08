@@ -5,8 +5,8 @@ import './LanguageSelector.css';
 const LanguageSelector = ({ activeLanguage, onLanguageChange }) => {
     const languages = [
         { id: 'typescript', icon: <SiTypescript />, label: 'TS' },
-        { id: 'python', icon: <SiPython />, label: 'PY' },
-        { id: 'javascript', icon: <SiJavascript />, label: 'JS' }
+        { id: 'javascript', icon: <SiJavascript />, label: 'JS' },
+        { id: 'python', icon: <SiPython />, label: 'PY' }
     ];
 
     return (

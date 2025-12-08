@@ -10,7 +10,7 @@ import { stepDescriptions } from './config/stepContent';
 import './App.css';
 
 function App() {
-    const [activeStep, setActiveStep] = useState('streams');
+    const [activeStep, setActiveStep] = useState('trigger');
     const [activeCategory, setActiveCategory] = useState('api-streams');
     const [activeLanguage, setActiveLanguage] = useState('typescript');
 

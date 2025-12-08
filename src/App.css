@@ -2,6 +2,11 @@
     box-sizing: border-box;
 }
 
+html {
+    overflow-x: hidden;
+    width: 100%;
+}
+
 body {
     margin: 0;
     padding: 0;
@@ -11,18 +16,24 @@ body {
         sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+    width: 100%;
 }
 
 .app {
     min-height: 100vh;
     background: #0a0a0a;
     color: #fff;
+    width: 100%;
+    overflow-x: hidden;
 }
 
 .app-content {
     max-width: 1600px;
     margin: 0 auto;
     padding: 0 32px 32px;
+    width: 100%;
+    overflow-x: hidden;
 }
 
 .content-body {
@@ -30,14 +41,16 @@ body {
     grid-template-columns: 1fr 1.5fr;
     gap: 48px;
     align-items: start;
+    width: 100%;
+    min-width: 0;
 }
 
 .code-section {
     display: flex;
     flex-direction: column;
     gap: 16px;
-    width: 50vw;
-    max-width: 50vw;
+    min-width: 0;
+    width: 100%;
 }
 
 .code-header-controls {
@@ -45,27 +58,49 @@ body {
     justify-content: space-between;
     align-items: center;
     gap: 24px;
+    flex-wrap: nowrap;
+    min-width: 0;
+    width: 100%;
 }
 
-/* Tablet and below */
-@media (max-width: 1200px) {
+/* iPad and below - proportional shrinking */
+@media (max-width: 1024px) {
     .app-content {
         padding: 0 24px 24px;
     }
 
     .content-body {
-        grid-template-columns: 1fr;
-        gap: 32px;
+        grid-template-columns: 1fr 1.3fr;
+        gap: 24px;
+        width: 100%;
+        min-width: 0;
+    }
+
+    .left-panel {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+    }
+
+    .code-section {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .code-header-controls {
+        gap: 16px;
+        flex-wrap: wrap;
     }
 }
 
-/* Mobile landscape and below */
+/* Tablet and below - stack vertically */
 @media (max-width: 768px) {
     .app-content {
         padding: 0 16px 16px;
     }
 
     .content-body {
+        grid-template-columns: 1fr;
         gap: 24px;
     }
 

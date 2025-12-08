@@ -1,25 +1,26 @@
 .left-panel {
     padding: 32px;
     color: #fff;
-    max-width: 500px;
+    width: 100%;
+    min-width: 0;
 }
 
 .panel-title {
-    font-size: clamp(22px, 4vw, 28px);
+    font-size: clamp(20px, 3vw, 26px);
     font-weight: 700;
     margin: 0 0 16px 0;
     line-height: 1.3;
 }
 
 .panel-description {
-    font-size: clamp(14px, 2.5vw, 16px);
+    font-size: clamp(13px, 2vw, 15px);
     color: rgba(255, 255, 255, 0.7);
     margin: 0 0 12px 0;
     line-height: 1.5;
 }
 
 .panel-details {
-    font-size: clamp(13px, 2vw, 14px);
+    font-size: clamp(12px, 1.8vw, 14px);
     color: rgba(255, 255, 255, 0.5);
     margin: 0 0 24px 0;
     line-height: 1.6;
@@ -77,25 +78,37 @@
 /* Tablet and below */
 @media (max-width: 768px) {
     .left-panel {
-        padding: 24px;
+        padding: 20px;
         max-width: 100%;
     }
 
+    .panel-title {
+        font-size: clamp(18px, 4vw, 22px);
+    }
+
+    .panel-description {
+        font-size: clamp(12px, 2.5vw, 14px);
+    }
+
+    .panel-details {
+        font-size: clamp(11px, 2vw, 13px);
+    }
+
     .read-docs-btn {
-        font-size: 13px;
-        padding: 9px 18px;
+        font-size: 12px;
+        padding: 8px 16px;
     }
 
     .auto-discovery-box {
-        padding: 14px;
+        padding: 12px;
     }
 
     .box-header {
-        font-size: 11px;
+        font-size: 10px;
     }
 
     .auto-discovery-box p {
-        font-size: 12px;
+        font-size: 11px;
     }
 }
 
