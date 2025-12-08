@@ -94,11 +94,10 @@ const LeftPanel = ({ stepContent }) => {
 
             {stepContent.autoDiscovery && (
                 <div className="step-auto-discovery-box">
-                    <div className="step-box-header">
-                        <FiInfo />
-                        <span>Auto-discovery</span>
+                    <div className="step-auto-discovery-line"></div>
+                    <div className="step-auto-discovery-content">
+                        {renderTextWithCode(stepContent.autoDiscovery)}
                     </div>
-                    <p>{renderTextWithCode(stepContent.autoDiscovery)}</p>
                 </div>
             )}
         </div>

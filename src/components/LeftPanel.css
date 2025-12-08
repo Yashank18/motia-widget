@@ -72,29 +72,23 @@
 }
 
 .step-auto-discovery-box {
-    background: rgba(100, 150, 255, 0.1);
-    border: 1px solid rgba(100, 150, 255, 0.3);
-    border-radius: 8px;
-    padding: 16px;
-    margin-top: 24px;
-}
-
-.step-box-header {
     display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 12px;
-    font-weight: 600;
-    color: rgba(100, 150, 255, 1);
-    margin-bottom: 8px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+    gap: 16px;
+    margin-top: 24px;
+    align-items: stretch;
 }
 
-.step-auto-discovery-box p {
+.step-auto-discovery-line {
+    width: 4px;
+    background: rgba(100, 150, 255, 1);
+    border-radius: 2px;
+    flex-shrink: 0;
+}
+
+.step-auto-discovery-content {
+    flex: 1;
     font-size: 13px;
     color: rgba(255, 255, 255, 0.7);
-    margin: 0;
     line-height: 1.6;
 }
 
@@ -123,14 +117,15 @@
     }
 
     .step-auto-discovery-box {
-        padding: 12px;
+        gap: 12px;
+        margin-top: 20px;
     }
 
-    .step-box-header {
-        font-size: 10px;
+    .step-auto-discovery-line {
+        width: 3px;
     }
 
-    .step-auto-discovery-box p {
+    .step-auto-discovery-content {
         font-size: 11px;
     }
 }
@@ -160,15 +155,15 @@
     }
 
     .step-auto-discovery-box {
-        padding: 12px;
+        gap: 10px;
         margin-top: 20px;
     }
 
-    .step-box-header {
-        font-size: 10px;
+    .step-auto-discovery-line {
+        width: 3px;
     }
 
-    .step-auto-discovery-box p {
+    .step-auto-discovery-content {
         font-size: 11px;
     }
 }
