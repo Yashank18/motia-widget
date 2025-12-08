@@ -2,7 +2,7 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
 export default defineConfig({
-  base: '/motia-widget/', // Replace 'Motia' with your actual GitHub repo name
+  base: '/', // Root path for Vercel deployment
   plugins: [react()],
   build: {
     rollupOptions: {
