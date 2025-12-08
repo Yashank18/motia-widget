@@ -3,6 +3,64 @@
 
 export const codeSnippets = {
   'api-streams': {
+    typescript: `import { ApiRouteConfig, Handlers } from 'motia'
+
+export const config: ApiRouteConfig = {
+  name: 'SendMessage',
+  type: 'api',
+  path: '/messages',
+  method: 'POST', 
+  emits: ['message.sent'],
+  flows: ['messaging']
+}
+
+export const handler: Handlers['SendMessage'] = async (req, { emit, logger, state, streams }) => {
+  const { text, userId } = req.body
+  const message = { text, userId, status: 'sent' }
+  await state.set('messages', userId, message)
+  await streams.messages.set(userId, message)
+  logger.info('Message sent', { userId })
+  await emit({ topic: 'message.sent', data: message })
+  return { status: 201, body: message }
+}`,
+    python: `config = {
+    name: 'SendMessage',
+    type: 'api',
+    path: '/messages',
+    "method": "POST",
+    "emits": ["message.sent"],
+    "flows": ["messaging"]
+}
+
+async def handler(req, context):
+    text = req.get("body", {}).get("text")
+    user_id = req.get("body", {}).get("userId")
+    message = {"text": text, "userId": user_id, "status": "sent"}
+    await context.state.set("messages", user_id, message)
+    await context.streams.messages.set(user_id, message)
+    context.logger.info("Message sent", {"userId": user_id})
+    await context.emit({"topic": "message.sent", "data": message})
+    return {"status": 201, "body": message}`,
+    javascript: `exports.config = {
+  name: 'SendMessage',
+  type: 'api',
+  path: '/messages',
+  method: 'POST',
+  emits: ['message.sent'],
+  flows: ['messaging']
+}
+
+exports.handler = async (req, { emit, logger, state, streams }) => {
+  const { text, userId } = req.body
+  const message = { text, userId, status: 'sent' }
+  await state.set('messages', userId, message)
+  await streams.messages.set(userId, message)
+  logger.info('Message sent', { userId })
+  await emit({ topic: 'message.sent', data: message })
+  return { status: 201, body: message }
+}`
+  },
+  'event-streams': {
     typescript: `import { EventConfig, Handlers } from 'motia'
 
 export const config: EventConfig = {
@@ -21,35 +79,24 @@ export const handler: Handlers['ProcessMessage'] = async (input, { emit, logger,
   logger.info('Message processed', { userId })
   await emit({ topic: 'message.processed', data: processedMessage })
 }`,
-    python: `from motia import EventConfig, handler
+    python: `config = {
+    "name": "ProcessMessage",
+    type: 'event',
+    "subscribes": ["message.sent"],
+    "emits": ["message.processed"],
+    "flows": ["messaging"]
+}
 
-config = EventConfig(
-    name="ProcessMessage",
-    type="event",
-    subscribes=["message.sent"],
-    emits=["message.processed"],
-    flows=["messaging"]
-)
-
-@handler("ProcessMessage")
-async def process_message(input, emit, logger, state, streams):
-    text = input["text"]
-    user_id = input["userId"]
-    status = input["status"]
-    
-    processed_message = {
-        "text": text,
-        "userId": user_id,
-        "status": "processed"
-    }
-    
-    await state.set("processed", user_id, processed_message)
-    await streams.processed.set(user_id, processed_message)
-    logger.info("Message processed", userId=user_id)
-    await emit(topic="message.processed", data=processed_message)`,
-    javascript: `import { EventConfig, Handlers } from 'motia'
-
-export const config = {
+async def handler(input_data, context):
+    text = input_data.get("text")
+    user_id = input_data.get("userId")
+    status = input_data.get("status")
+    processed_message = {"text": text, "userId": user_id, "status": "processed"}
+    await context.state.set("processed", user_id, processed_message)
+    await context.streams.processed.set(user_id, processed_message)
+    context.logger.info("Message processed", {"userId": user_id})
+    await context.emit({ "topic": "message.processed", "data": processed_message })`,
+    javascript: `exports.config = {
   name: 'ProcessMessage',
   type: 'event',
   subscribes: ['message.sent'],
@@ -57,7 +104,7 @@ export const config = {
   flows: ['messaging']
 }
 
-export const handler = async (input, { emit, logger, state, streams }) => {
+exports.handler = async (input, { emit, logger, state, streams }) => {
   const { text, userId, status } = input
   const processedMessage = { text, userId, status: 'processed' }
   await state.set('processed', userId, processedMessage)
@@ -66,98 +113,55 @@ export const handler = async (input, { emit, logger, state, streams }) => {
   await emit({ topic: 'message.processed', data: processedMessage })
 }`
   },
-  'event-streams': {
-    typescript: `import { EventConfig, Handlers } from 'motia'
-
-export const config: EventConfig = {
-  name: 'UserNotification',
-  type: 'event',
-  subscribes: ['user.action'],
-  emits: ['notification.sent']
-}
-
-export const handler: Handlers['UserNotification'] = async (input, { emit, logger, state, streams }) => {
-  const notification = await createNotification(input)
-  await state.set('notifications', input.userId, notification)
-  logger.info('Notification created', { userId: input.userId })
-  await emit({ topic: 'notification.sent', data: notification })
-  await streams.notifications.set(input.userId, notification)
-}`,
-    python: `from motia import EventConfig, handler
-
-config = EventConfig(
-    name="UserNotification",
-    type="event",
-    subscribes=["user.action"],
-    emits=["notification.sent"]
-)
-
-@handler("UserNotification")
-async def user_notification(input, emit, logger, state, streams):
-    notification = await create_notification(input)
-    await state.set("notifications", input["userId"], notification)
-    logger.info("Notification created", userId=input["userId"])
-    await emit(topic="notification.sent", data=notification)
-    await streams.notifications.set(input["userId"], notification)`,
-    javascript: `import { EventConfig, Handlers } from 'motia'
-
-export const config = {
-  name: 'UserNotification',
-  type: 'event',
-  subscribes: ['user.action'],
-  emits: ['notification.sent']
-}
-
-export const handler = async (input, { emit, logger, state, streams }) => {
-  const notification = await createNotification(input)
-  await state.set('notifications', input.userId, notification)
-  logger.info('Notification created', { userId: input.userId })
-  await emit({ topic: 'notification.sent', data: notification })
-  await streams.notifications.set(input.userId, notification)
-}`
-  },
   'cron-streams': {
     typescript: `import { CronConfig, Handlers } from 'motia'
 
 export const config: CronConfig = {
-  name: 'DailyReport',
-  schedule: '0 9 * * *'
+  name: 'DailySummary',
+  type: 'cron',
+  cron: '0 9 * * *',
+  emits: ['summary.generated'],
+  flows: ['messaging']
 }
 
-export const handler: Handlers['DailyReport'] = async (input, { emit, logger, state, streams }) => {
-  const report = await generateReport()
-  await state.set('reports', 'daily', report)
-  logger.info('Daily report generated')
-  await emit({ topic: 'report.generated', data: report })
-  await streams.reports.set('daily', report)
+export const handler: Handlers['DailySummary'] = async ({ emit, state, logger, streams }) => {
+  const messages = await state.getGroup('messages')
+  const summary = { total: messages.length, status: 'completed' }
+  await state.set('summaries', 'daily', summary)
+  await streams.summary.set('latest', summary)
+  logger.info('Daily summary generated', { total: summary.total })
+  await emit({ topic: 'summary.generated', data: summary })
 }`,
-    python: `from motia import CronConfig, handler
-
-config = CronConfig(
-    name="DailyReport",
-    schedule="0 9 * * *"
-)
-
-@handler("DailyReport")
-async def daily_report(input, emit, logger, state, streams):
-    report = await generate_report()
-    await state.set("reports", "daily", report)
-    logger.info("Daily report generated")
-    await emit(topic="report.generated", data=report)
-    await streams.reports.set("daily", report)`,
-    javascript: `import { CronConfig, Handlers } from 'motia'
-
-export const config = {
-  name: 'DailyReport',
-  schedule: '0 9 * * *'
+    python: `config = {
+    "name": "DailySummary",
+    type: 'cron',
+    "cron": "0 9 * * *",
+    "emits": ["summary.generated"],
+    "flows": ["messaging"]
 }
 
-export const handler = async (input, { emit, logger, state, streams }) => {
-  const report = await generateReport()
-  await state.set('reports', 'daily', report)
-  logger.info('Daily report generated')
-  await emit({ topic: 'report.generated', data: report })
-  await streams.reports.set('daily', report)
+async def handler(context):
+    messages = await context.state.get_group("messages")
+    summary = {"total": len(messages), "status": "completed"}
+    await context.state.set("summaries", "daily", summary)
+    await context.streams.summary.set("latest", summary)
+    context.logger.info("Daily summary generated", {"total": summary["total"]})
+    await context.emit({  "topic": "summary.generated", "data": summary })`,
+    javascript: `exports.config = {
+  name: 'DailySummary',
+  type: 'cron',
+  cron: '0 9 * * *',
+  emits: ['summary.generated'],
+  flows: ['messaging']
+}
+
+exports.handler = async ({ emit, state, logger, streams }) => {
+  const messages = await state.getGroup('messages')
+  const summary = { total: messages.length, status: 'completed' }
+  await state.set('summaries', 'daily', summary)
+  await streams.summary.set('latest', summary)
+  logger.info('Daily summary generated', { total: summary.total })
+  await emit({ topic: 'summary.generated', data: summary })
 }`
   }
 };

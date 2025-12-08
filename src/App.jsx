@@ -14,28 +14,55 @@ function App() {
     const [activeCategory, setActiveCategory] = useState('api-streams');
     const [activeLanguage, setActiveLanguage] = useState('typescript');
 
-    // Get current code snippet
-    const currentCode = codeSnippets[activeCategory]?.[activeLanguage] || '// No code available';
+    // Get current code snippet - same code for all steps, only depends on category and language
+    const currentCode = React.useMemo(() => {
+        // Ensure we have valid category and language
+        if (!activeCategory || !activeLanguage) {
+            return '// No code available';
+        }
+        
+        // Get the code for the specific category and language
+        const categoryData = codeSnippets[activeCategory];
+        if (!categoryData) {
+            console.error(`Category "${activeCategory}" not found. Available:`, Object.keys(codeSnippets));
+            return '// No code available';
+        }
+        
+        const code = categoryData[activeLanguage];
+        if (!code) {
+            console.error(`Language "${activeLanguage}" not found for category "${activeCategory}". Available:`, Object.keys(categoryData));
+            return '// No code available';
+        }
+        
+        return code;
+    }, [activeCategory, activeLanguage]);
 
-    // Get highlight lines for current step and category
+    // Get highlight lines for current step, category, and language
     // Always create a new array to ensure React detects changes
     const highlightLines = React.useMemo(() => {
-        const lines = highlightRanges[activeCategory]?.[activeStep];
+        const stepHighlights = highlightRanges[activeCategory]?.[activeStep];
+        const lines = stepHighlights?.[activeLanguage];
         return lines ? [...lines] : [];
-    }, [activeCategory, activeStep]);
+    }, [activeCategory, activeStep, activeLanguage]);
 
     // Get step content for left panel
     const stepContent = stepDescriptions[activeStep] || {};
 
     // Generate filename based on category and language
     const getFilename = () => {
-        const categoryName = activeCategory.replace('-', '-');
+        // Map category to base filename
+        const categoryMap = {
+            'api-streams': 'api.step',
+            'event-streams': 'event.step',
+            'cron-streams': 'cron.step'
+        };
+        const baseName = categoryMap[activeCategory] || 'step';
         const extensions = {
             typescript: '.ts',
             python: '.py',
             javascript: '.js'
         };
-        return `${categoryName}${extensions[activeLanguage]}`;
+        return `${baseName}${extensions[activeLanguage]}`;
     };
 
     return (
@@ -60,6 +87,7 @@ function App() {
                         </div>
 
                         <CodeDisplay
+                            key={`${activeCategory}-${activeLanguage}`}
                             code={currentCode}
                             language={activeLanguage}
                             highlightLines={highlightLines}

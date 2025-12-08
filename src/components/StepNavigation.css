@@ -23,7 +23,7 @@
     border: none;
     border-bottom: 2px solid transparent;
     color: rgba(255, 255, 255, 0.5);
-    font-size: 11px;
+    font-size: 14px;
     font-weight: 600;
     letter-spacing: 0.5px;
     cursor: pointer;
@@ -45,8 +45,8 @@
 }
 
 .step-icon {
-    width: 16px;
-    height: 16px;
+    width: 20px;
+    height: 20px;
     display: block;
     flex-shrink: 0;
     opacity: 0.5;
@@ -71,12 +71,12 @@
 
     .step-btn {
         padding: 14px 16px;
-        font-size: 10px;
+        font-size: 12px;
     }
 
     .step-icon {
-        width: 14px;
-        height: 14px;
+        width: 18px;
+        height: 18px;
     }
 }
 
@@ -89,12 +89,12 @@
 
     .step-btn {
         padding: 12px 12px;
-        font-size: 9px;
+        font-size: 11px;
         letter-spacing: 0.3px;
     }
 
     .step-icon {
-        width: 12px;
-        height: 12px;
+        width: 16px;
+        height: 16px;
     }
 }
