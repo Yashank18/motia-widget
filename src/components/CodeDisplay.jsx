@@ -60,7 +60,7 @@ const CodeDisplay = React.memo(({ code, language, highlightLines, filename }) =>
                     language={getLanguageForPrism(language)}
                 >
                     {({ className, style, tokens, getLineProps, getTokenProps }) => (
-                        <pre className={className} style={style}>
+                        <pre className={className} style={{ ...style, background: 'transparent' }}>
                             {tokens.map((line, i) => {
                                 const lineNumber = i + 1;
                                 const lineProps = getLineProps({ line, key: i });
