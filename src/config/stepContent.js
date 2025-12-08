@@ -2,39 +2,45 @@
 
 export const stepDescriptions = {
     trigger: {
-        title: 'Trigger - How It Starts',
-        description: 'Define what triggers your workflow to start processing.',
-        details: 'Configure the event type, subscriptions, and flow definitions that determine when your handler executes.',
-        docsLink: '#'
+        title: 'Trigger - How Execution Begins',
+        description: 'Every Step has a type that defines how it triggers. Change the type, and the same pattern works for different use cases. A Step file contains two parts.',
+        details: '**Config** → defines when and how the Step runs, and gives it a unique name\n**Handler** → the function that executes your business logic',
+        docsLink: 'https://www.motia.dev/docs/concepts/steps#triggers',
+        autoDiscovery: 'Motia automatically discovers any file ending in .step.ts, .step.js, or .step.py. The filename tells Motia to load it, and the name in the config uniquely identifies the Step inside your system.'
     },
     handler: {
-        title: 'Handler - Processing Logic',
-        description: 'The main function that processes your data.',
-        details: 'Access input data and use the provided utilities (emit, logger, state, streams) to implement your business logic.',
-        docsLink: '#'
+        title: 'Handler - How It Performs Logic',
+        description: '',
+        details: 'This is where your business logic lives. The `handler` function receives input data and a context object with everything you need: `logger` for tracking, `emit` for triggering other Steps, `state` for storing data, and `streams` for real-time updates',
+        docsLink: 'https://www.motia.dev/docs/concepts/steps#handler-configuration',
+        autoDiscovery: 'Motia automatically discovers any file ending in .step.ts, .step.js, or .step.py. The filename tells Motia to load it, and the name in the config uniquely identifies the Step inside your system.'
     },
     emit: {
-        title: 'Emit - Send Events',
-        description: 'Broadcast events to other parts of your system.',
-        details: 'Use emit to send processed data to subscribers, enabling event-driven architecture.',
-        docsLink: '#'
+        title: 'Emit - How It Outputs Data',
+        description: '',
+        details: 'Send data to other Steps using `await emit({ topic: event.name, data: {...} })`. Any Step that subscribes to that topic will receive your data and run automatically. This is how Steps talk to each other.',
+        docsLink: 'https://www.motia.dev/docs/concepts/steps#steps-work-together-emit--subscribe',
+        autoDiscovery: 'Motia automatically discovers any file ending in .step.ts, .step.js, or .step.py. The filename tells Motia to load it, and the name in the config uniquely identifies the Step inside your system.'
     },
     state: {
-        title: 'State - Persist Data',
-        description: 'Store and retrieve stateful data.',
-        details: 'Use the state API to persist data across invocations and maintain application state.',
-        docsLink: '#'
+        title: 'State - How It Stores Data',
+        description: '',
+        details: 'Store and retrieve data across Steps using `await state.set(key, value)` and `await state.get(key)`. Perfect for tracking workflow progress, caching results, or sharing data between Steps without setting up a database.',
+        docsLink: 'https://www.motia.dev/docs/development-guide/state-management',
+        autoDiscovery: 'Motia automatically discovers any file ending in .step.ts, .step.js, or .step.py. The filename tells Motia to load it, and the name in the config uniquely identifies the Step inside your system.'
     },
     logger: {
-        title: 'Logger - Track Activity',
-        description: 'Log important events and debugging information.',
-        details: 'Use structured logging to track execution flow and debug issues in production.',
-        docsLink: '#'
+        title: 'Logger - How it tracks execution',
+        description: '',
+        details: 'Every handler gets a `logger` object. Call `logger.info()`, `logger.warn()`, or `logger.error()` with your message and data. All logs automatically include your Step name, trace ID, and timestamp - making it easy to debug workflows in the Workbench.',
+        docsLink: 'https://www.motia.dev/docs/development-guide/observability',
+        autoDiscovery: 'Motia automatically discovers any file ending in .step.ts, .step.js, or .step.py. The filename tells Motia to load it, and the name in the config uniquely identifies the Step inside your system.'
     },
     streams: {
-        title: 'Streams - Real-time Updates',
-        description: 'Push updates directly to connected clients.',
-        details: 'When you update stream data from any step, all subscribed frontend clients receive the changes instantly - no extra setup needed.',
+        title: 'Streams - How It Broadcasts Live Data',
+        description: '',
+        details: 'Push updates directly to connected clients with `await streams.mystream.set(key, value)`. When you update stream data from any Step, all subscribed frontend clients receive the changes instantly - no extra setup needed.',
+        docsLink: 'https://www.motia.dev/docs/development-guide/streams',
         autoDiscovery: 'Motia automatically discovers any file ending in .step.ts, .step.js, or .step.py. The filename tells Motia to load it, and the name in the config uniquely identifies the Step inside your system.'
     }
 };
