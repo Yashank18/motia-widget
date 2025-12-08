@@ -20,15 +20,15 @@ const CategoryTabs = ({ activeCategory, onCategoryChange, activeStep }) => {
     ];
 
     return (
-        <div className="category-tabs">
+        <div className="step-category-tabs">
             {categories.map(category => (
                 <button
                     key={category.id}
-                    className={`category-tab ${activeCategory === category.id ? 'active' : ''}`}
+                    className={`step-category-tab ${activeCategory === category.id ? 'active' : ''}`}
                     onClick={() => onCategoryChange(category.id)}
                 >
-                    <span className="category-icon">{category.icon}</span>
-                    <span className="category-label">{category.label}</span>
+                    <span className="step-category-icon">{category.icon}</span>
+                    <span className="step-category-label">{category.label}</span>
                 </button>
             ))}
         </div>

@@ -13,7 +13,7 @@ const CodeDisplay = React.memo(({ code, language, highlightLines, filename }) =>
 
         // Remove all previous highlights
         Object.values(highlightRefs.current).forEach(el => {
-            if (el) el.classList.remove('highlight-line');
+            if (el) el.classList.remove('step-highlight-line');
         });
 
         // Add new highlights
@@ -21,7 +21,7 @@ const CodeDisplay = React.memo(({ code, language, highlightLines, filename }) =>
             const el = highlightRefs.current[lineNum];
             if (el) {
                 console.log('Highlighting line:', lineNum);
-                el.classList.add('highlight-line');
+                el.classList.add('step-highlight-line');
             } else {
                 console.log('Element not found for line:', lineNum);
             }
@@ -44,16 +44,16 @@ const CodeDisplay = React.memo(({ code, language, highlightLines, filename }) =>
     };
 
     return (
-        <div className="code-display">
-            <div className="code-header">
-                <div className="code-filename">{filename}</div>
-                <div className="code-actions">
-                    <button className="copy-btn" onClick={handleCopy}>
+        <div className="step-code-display">
+            <div className="step-code-header">
+                <div className="step-code-filename">{filename}</div>
+                <div className="step-code-actions">
+                    <button className="step-copy-btn" onClick={handleCopy}>
                         {copied ? <FiCheck /> : <FiCopy />}
                     </button>
                 </div>
             </div>
-            <div className="code-content">
+            <div className="step-code-content">
                 <Highlight
                     theme={themes.nightOwl}
                     code={code}
@@ -70,10 +70,10 @@ const CodeDisplay = React.memo(({ code, language, highlightLines, filename }) =>
                                         key={i}
                                         {...lineProps}
                                         ref={el => highlightRefs.current[lineNumber] = el}
-                                        className={`code-line ${lineProps.className || ''}`}
+                                        className={`step-code-line ${lineProps.className || ''}`}
                                     >
-                                        <span className="line-number">{lineNumber}</span>
-                                        <span className="line-content">
+                                        <span className="step-line-number">{lineNumber}</span>
+                                        <span className="step-line-content">
                                             {line.map((token, key) => (
                                                 <span key={key} {...getTokenProps({ token, key })} />
                                             ))}

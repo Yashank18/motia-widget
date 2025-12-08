@@ -10,11 +10,11 @@ const LanguageSelector = ({ activeLanguage, onLanguageChange }) => {
     ];
 
     return (
-        <div className="language-selector">
+        <div className="step-language-selector">
             {languages.map(lang => (
                 <button
                     key={lang.id}
-                    className={`language-btn ${activeLanguage === lang.id ? 'active' : ''}`}
+                    className={`step-language-btn ${activeLanguage === lang.id ? 'active' : ''}`}
                     onClick={() => onLanguageChange(lang.id)}
                     title={lang.label}
                 >

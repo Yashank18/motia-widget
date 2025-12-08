@@ -1,32 +1,32 @@
-.left-panel {
+.step-left-panel {
     padding: 32px;
     color: #fff;
     width: 100%;
     min-width: 0;
 }
 
-.panel-title {
+.step-panel-title {
     font-size: clamp(20px, 3vw, 26px);
     font-weight: 700;
     margin: 0 0 16px 0;
     line-height: 1.3;
 }
 
-.panel-description {
+.step-panel-description {
     font-size: clamp(13px, 2vw, 15px);
     color: rgba(255, 255, 255, 0.7);
     margin: 0 0 12px 0;
     line-height: 1.5;
 }
 
-.panel-details {
+.step-panel-details {
     font-size: clamp(12px, 1.8vw, 14px);
     color: rgba(255, 255, 255, 0.5);
     margin: 0 0 24px 0;
     line-height: 1.6;
 }
 
-.read-docs-btn {
+.step-read-docs-btn {
     display: inline-flex;
     align-items: center;
     gap: 8px;
@@ -48,7 +48,7 @@
     transform: translateX(2px);
 }
 
-.auto-discovery-box {
+.step-auto-discovery-box {
     background: rgba(100, 150, 255, 0.1);
     border: 1px solid rgba(100, 150, 255, 0.3);
     border-radius: 8px;
@@ -56,7 +56,7 @@
     margin-top: 24px;
 }
 
-.box-header {
+.step-box-header {
     display: flex;
     align-items: center;
     gap: 8px;
@@ -68,7 +68,7 @@
     letter-spacing: 0.5px;
 }
 
-.auto-discovery-box p {
+.step-auto-discovery-box p {
     font-size: 13px;
     color: rgba(255, 255, 255, 0.7);
     margin: 0;
@@ -77,75 +77,75 @@
 
 /* Tablet and below */
 @media (max-width: 768px) {
-    .left-panel {
+    .step-left-panel {
         padding: 20px;
         max-width: 100%;
     }
 
-    .panel-title {
+    .step-panel-title {
         font-size: clamp(18px, 4vw, 22px);
     }
 
-    .panel-description {
+    .step-panel-description {
         font-size: clamp(12px, 2.5vw, 14px);
     }
 
-    .panel-details {
+    .step-panel-details {
         font-size: clamp(11px, 2vw, 13px);
     }
 
-    .read-docs-btn {
+    .step-read-docs-btn {
         font-size: 12px;
         padding: 8px 16px;
     }
 
-    .auto-discovery-box {
+    .step-auto-discovery-box {
         padding: 12px;
     }
 
-    .box-header {
+    .step-box-header {
         font-size: 10px;
     }
 
-    .auto-discovery-box p {
+    .step-auto-discovery-box p {
         font-size: 11px;
     }
 }
 
 /* Mobile */
 @media (max-width: 480px) {
-    .left-panel {
+    .step-left-panel {
         padding: 20px 16px;
     }
 
-    .panel-title {
+    .step-panel-title {
         margin-bottom: 12px;
     }
 
-    .panel-description {
+    .step-panel-description {
         margin-bottom: 10px;
     }
 
-    .panel-details {
+    .step-panel-details {
         margin-bottom: 20px;
     }
 
-    .read-docs-btn {
+    .step-read-docs-btn {
         font-size: 12px;
         padding: 8px 16px;
         margin-bottom: 20px;
     }
 
-    .auto-discovery-box {
+    .step-auto-discovery-box {
         padding: 12px;
         margin-top: 20px;
     }
 
-    .box-header {
+    .step-box-header {
         font-size: 10px;
     }
 
-    .auto-discovery-box p {
+    .step-auto-discovery-box p {
         font-size: 11px;
     }
 }

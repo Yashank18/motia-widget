@@ -66,15 +66,15 @@ function App() {
     };
 
     return (
-        <div className="app">
+        <div className="step-app">
             <StepNavigation activeStep={activeStep} onStepChange={setActiveStep} />
 
-            <div className="app-content">
-                <div className="content-body">
+            <div className="step-app-content">
+                <div className="step-content-body">
                     <LeftPanel stepContent={stepContent} />
 
-                    <div className="code-section">
-                        <div className="code-header-controls">
+                    <div className="step-code-section">
+                        <div className="step-code-header-controls">
                             <CategoryTabs
                                 activeCategory={activeCategory}
                                 onCategoryChange={setActiveCategory}

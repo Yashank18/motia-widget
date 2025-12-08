@@ -4,19 +4,19 @@ import './LeftPanel.css';
 
 const LeftPanel = ({ stepContent }) => {
     return (
-        <div className="left-panel">
-            <h2 className="panel-title">{stepContent.title}</h2>
-            <p className="panel-description">{stepContent.description}</p>
-            <p className="panel-details">{stepContent.details}</p>
+        <div className="step-left-panel">
+            <h2 className="step-panel-title">{stepContent.title}</h2>
+            <p className="step-panel-description">{stepContent.description}</p>
+            <p className="step-panel-details">{stepContent.details}</p>
 
-            <button className="read-docs-btn">
+            <button className="step-read-docs-btn">
                 <span>Read docs</span>
                 <FiArrowRight />
             </button>
 
             {stepContent.autoDiscovery && (
-                <div className="auto-discovery-box">
-                    <div className="box-header">
+                <div className="step-auto-discovery-box">
+                    <div className="step-box-header">
                         <FiInfo />
                         <span>Auto-discovery</span>
                     </div>

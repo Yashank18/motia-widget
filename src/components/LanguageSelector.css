@@ -1,10 +1,10 @@
-.language-selector {
+.step-language-selector {
     display: flex;
     gap: 8px;
     align-items: center;
 }
 
-.language-btn {
+.step-language-btn {
     width: 32px;
     height: 32px;
     display: flex;
@@ -33,11 +33,11 @@
 
 /* Tablet and below */
 @media (max-width: 768px) {
-    .language-selector {
+    .step-language-selector {
         gap: 6px;
     }
 
-    .language-btn {
+    .step-language-btn {
         width: 30px;
         height: 30px;
         font-size: 15px;
@@ -46,12 +46,12 @@
 
 /* Mobile */
 @media (max-width: 480px) {
-    .language-selector {
+    .step-language-selector {
         gap: 6px;
         justify-content: center;
     }
 
-    .language-btn {
+    .step-language-btn {
         width: 28px;
         height: 28px;
         font-size: 14px;

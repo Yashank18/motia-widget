@@ -20,7 +20,7 @@ body {
     width: 100%;
 }
 
-.app {
+.step-app {
     min-height: 100vh;
     background: #0a0a0a;
     color: #fff;
@@ -28,7 +28,7 @@ body {
     overflow-x: hidden;
 }
 
-.app-content {
+.step-app-content {
     max-width: 1600px;
     margin: 0 auto;
     padding: 0 32px 32px;
@@ -36,7 +36,7 @@ body {
     overflow-x: hidden;
 }
 
-.content-body {
+.step-content-body {
     display: grid;
     grid-template-columns: 1fr 1.5fr;
     gap: 48px;
@@ -45,7 +45,7 @@ body {
     min-width: 0;
 }
 
-.code-section {
+.step-code-section {
     display: flex;
     flex-direction: column;
     gap: 16px;
@@ -53,7 +53,7 @@ body {
     width: 100%;
 }
 
-.code-header-controls {
+.step-code-header-controls {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -65,29 +65,29 @@ body {
 
 /* iPad and below - proportional shrinking */
 @media (max-width: 1024px) {
-    .app-content {
+    .step-app-content {
         padding: 0 24px 24px;
     }
 
-    .content-body {
+    .step-content-body {
         grid-template-columns: 1fr 1.3fr;
         gap: 24px;
         width: 100%;
         min-width: 0;
     }
 
-    .left-panel {
+    .step-left-panel {
         width: 100%;
         max-width: 100%;
         min-width: 0;
     }
 
-    .code-section {
+    .step-code-section {
         width: 100%;
         min-width: 0;
     }
 
-    .code-header-controls {
+    .step-code-header-controls {
         gap: 16px;
         flex-wrap: wrap;
     }
@@ -95,16 +95,16 @@ body {
 
 /* Tablet and below - stack vertically */
 @media (max-width: 768px) {
-    .app-content {
+    .step-app-content {
         padding: 0 16px 16px;
     }
 
-    .content-body {
+    .step-content-body {
         grid-template-columns: 1fr;
         gap: 24px;
     }
 
-    .code-header-controls {
+    .step-code-header-controls {
         flex-direction: column;
         align-items: stretch;
         gap: 16px;
@@ -113,16 +113,16 @@ body {
 
 /* Small mobile */
 @media (max-width: 480px) {
-    .app-content {
+    .step-app-content {
         padding: 0 12px 12px;
     }
 
-    .content-body {
+    .step-content-body {
         gap: 20px;
     }
 }
 
 /* Smooth transitions */
-.code-line {
+.step-code-line {
     transition: background-color 0.3s ease;
 }

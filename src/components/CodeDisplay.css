@@ -1,4 +1,4 @@
-.code-display {
+.step-code-display {
     background: transparent;
     border-radius: 8px;
     overflow: hidden;
@@ -10,7 +10,7 @@
     max-width: 100%;
 }
 
-.code-header {
+.step-code-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -19,18 +19,18 @@
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.code-filename {
+.step-code-filename {
     font-size: 13px;
     color: rgba(255, 255, 255, 0.7);
     font-family: 'Monaco', 'Menlo', monospace;
 }
 
-.code-actions {
+.step-code-actions {
     display: flex;
     gap: 8px;
 }
 
-.copy-btn {
+.step-copy-btn {
     width: 28px;
     height: 28px;
     display: flex;
@@ -49,7 +49,7 @@
     color: rgba(255, 255, 255, 0.9);
 }
 
-.code-content {
+.step-code-content {
     overflow-x: auto;
     overflow-y: auto;
     max-height: 600px;
@@ -60,7 +60,7 @@
     position: relative;
 }
 
-.code-content pre {
+.step-code-content pre {
     margin: 0;
     padding: 16px;
     font-size: 13px;
@@ -72,11 +72,11 @@
     display: block;
 }
 
-.code-content pre[class*="language-"] {
+.step-code-content pre[class*="language-"] {
     background: transparent !important;
 }
 
-.code-line {
+.step-code-line {
     display: flex;
     transition: background-color 0.3s ease;
     padding: 2px 0;
@@ -84,13 +84,13 @@
     width: 100%;
 }
 
-.code-line.highlight-line {
+.step-code-line.step-highlight-line {
     background: rgba(255, 200, 0, 0.15);
     border-left: 3px solid rgba(255, 200, 0, 0.8);
     margin-left: -3px;
 }
 
-.line-number {
+.step-line-number {
     display: inline-block;
     width: 40px;
     text-align: right;
@@ -100,7 +100,7 @@
     flex-shrink: 0;
 }
 
-.line-content {
+.step-line-content {
     flex: 1;
     min-width: 0;
     overflow-x: auto;
@@ -108,7 +108,7 @@
 }
 
 /* Custom scrollbar */
-.code-content::-webkit-scrollbar {
+.step-code-content::-webkit-scrollbar {
     width: 8px;
     height: 8px;
 }
@@ -128,16 +128,16 @@
 
 /* iPad and below */
 @media (max-width: 1024px) {
-    .code-content {
+    .step-code-content {
         max-height: 450px;
     }
 
-    .code-content pre {
+    .step-code-content pre {
         font-size: 11px;
         padding: 12px;
     }
 
-    .line-number {
+    .step-line-number {
         width: 32px;
         padding-right: 10px;
         font-size: 10px;
@@ -146,30 +146,30 @@
 
 /* Tablet portrait and below */
 @media (max-width: 768px) {
-    .code-header {
+    .step-code-header {
         padding: 10px 14px;
     }
 
-    .code-filename {
+    .step-code-filename {
         font-size: 11px;
     }
 
-    .copy-btn {
+    .step-copy-btn {
         width: 26px;
         height: 26px;
     }
 
-    .code-content {
+    .step-code-content {
         max-height: 350px;
     }
 
-    .code-content pre {
+    .step-code-content pre {
         font-size: 10px;
         padding: 10px;
         line-height: 1.5;
     }
 
-    .line-number {
+    .step-line-number {
         width: 28px;
         padding-right: 8px;
         font-size: 9px;
@@ -178,41 +178,41 @@
 
 /* Mobile */
 @media (max-width: 480px) {
-    .code-display {
+    .step-code-display {
         border-radius: 6px;
     }
 
-    .code-header {
+    .step-code-header {
         padding: 8px 12px;
     }
 
-    .code-filename {
+    .step-code-filename {
         font-size: 11px;
     }
 
-    .copy-btn {
+    .step-copy-btn {
         width: 24px;
         height: 24px;
         font-size: 12px;
     }
 
-    .code-content {
+    .step-code-content {
         max-height: 350px;
     }
 
-    .code-content pre {
+    .step-code-content pre {
         font-size: 10px;
         padding: 10px;
         line-height: 1.4;
     }
 
-    .line-number {
+    .step-line-number {
         width: 28px;
         padding-right: 8px;
         font-size: 9px;
     }
 
-    .code-line.highlight-line {
+    .step-code-line.step-highlight-line {
         border-left-width: 2px;
         margin-left: -2px;
     }
