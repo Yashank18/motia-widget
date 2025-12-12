@@ -41,7 +41,7 @@
 .step-code-inner-header {
     display: flex;
     align-items: flex-end;
-    gap: 70%;
+    gap: 0;
     padding: 0;
     padding-left: 16px;
     padding-top: 8px;
@@ -49,7 +49,6 @@
     background: rgba(0, 0, 0, 0.2);
     flex-wrap: wrap;
     min-height: 36px;
-    align-items: center;
 }
 
 .step-code-filename-tab {
@@ -75,8 +74,11 @@
 }
 
 .step-copy-btn {
-    width: 28px;
-    height: 28px;
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 32px;
+    height: 32px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -86,8 +88,7 @@
     color: rgba(255, 255, 255, 0.6);
     cursor: pointer;
     transition: all 0.2s ease;
-    margin-bottom: -1px;
-    flex-shrink: 0;
+    z-index: 10;
 }
 
 .step-copy-btn:hover {
@@ -110,7 +111,13 @@
     flex-direction: column;
 }
 
-.step-code-content pre {
+.step-code-wrapper {
+    position: relative;
+    flex: 1;
+    overflow: auto;
+}
+
+.step-code-wrapper pre {
     margin: 0;
     padding: 16px;
     font-size: 13px;
@@ -122,11 +129,11 @@
     display: block;
     box-sizing: border-box;
     contain: layout style;
-    flex: 1;
+    height: 100%;
     overflow: auto;
 }
 
-.step-code-content pre[class*="language-"] {
+.step-code-wrapper pre[class*="language-"] {
     background: transparent !important;
 }
 
@@ -192,7 +199,7 @@
         height: 450px;
     }
 
-    .step-code-content pre {
+    .step-code-wrapper pre {
         font-size: 11px;
         padding: 12px;
     }
@@ -229,8 +236,10 @@
     }
 
     .step-copy-btn {
-        width: 26px;
-        height: 26px;
+        width: 28px;
+        height: 28px;
+        top: 8px;
+        right: 8px;
     }
 
     .step-code-content {
@@ -239,7 +248,7 @@
         height: 350px;
     }
 
-    .step-code-content pre {
+    .step-code-wrapper pre {
         font-size: 10px;
         padding: 10px;
         line-height: 1.5;
@@ -281,8 +290,10 @@
     }
 
     .step-copy-btn {
-        width: 24px;
-        height: 24px;
+        width: 26px;
+        height: 26px;
+        top: 6px;
+        right: 6px;
         font-size: 12px;
     }
 
@@ -292,7 +303,7 @@
         height: 350px;
     }
 
-    .step-code-content pre {
+    .step-code-wrapper pre {
         font-size: 10px;
         padding: 10px;
         line-height: 1.4;

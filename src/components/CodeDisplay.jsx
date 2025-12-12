@@ -63,40 +63,42 @@ const CodeDisplay = React.memo(({ code, language, highlightLines, filename, acti
             <div className="step-code-content">
                 <div className="step-code-inner-header">
                     <div className="step-code-filename-tab">{filename}</div>
+                </div>
+                <div className="step-code-wrapper">
                     <button className="step-copy-btn" onClick={handleCopy}>
                         {copied ? <FiCheck /> : <FiCopy />}
                     </button>
-                </div>
-                <Highlight
-                    theme={themes.nightOwl}
-                    code={code}
-                    language={getLanguageForPrism(language)}
-                >
-                    {({ className, style, tokens, getLineProps, getTokenProps }) => (
-                        <pre className={className} style={{ ...style, background: 'transparent' }}>
-                            {tokens.map((line, i) => {
-                                const lineNumber = i + 1;
-                                const lineProps = getLineProps({ line, key: i });
+                    <Highlight
+                        theme={themes.nightOwl}
+                        code={code}
+                        language={getLanguageForPrism(language)}
+                    >
+                        {({ className, style, tokens, getLineProps, getTokenProps }) => (
+                            <pre className={className} style={{ ...style, background: 'transparent' }}>
+                                {tokens.map((line, i) => {
+                                    const lineNumber = i + 1;
+                                    const lineProps = getLineProps({ line, key: i });
 
-                                return (
-                                    <div
-                                        key={i}
-                                        {...lineProps}
-                                        ref={el => highlightRefs.current[lineNumber] = el}
-                                        className={`step-code-line ${lineProps.className || ''}`}
-                                    >
-                                        <span className="step-line-number">{lineNumber}</span>
-                                        <span className="step-line-content">
-                                            {line.map((token, key) => (
-                                                <span key={key} {...getTokenProps({ token, key })} />
-                                            ))}
-                                        </span>
-                                    </div>
-                                );
-                            })}
-                        </pre>
-                    )}
-                </Highlight>
+                                    return (
+                                        <div
+                                            key={i}
+                                            {...lineProps}
+                                            ref={el => highlightRefs.current[lineNumber] = el}
+                                            className={`step-code-line ${lineProps.className || ''}`}
+                                        >
+                                            <span className="step-line-number">{lineNumber}</span>
+                                            <span className="step-line-content">
+                                                {line.map((token, key) => (
+                                                    <span key={key} {...getTokenProps({ token, key })} />
+                                                ))}
+                                            </span>
+                                        </div>
+                                    );
+                                })}
+                            </pre>
+                        )}
+                    </Highlight>
+                </div>
             </div>
         </div>
     );
