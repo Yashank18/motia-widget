@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import StepNavigation from './components/StepNavigation';
-import CategoryTabs from './components/CategoryTabs';
 import LanguageSelector from './components/LanguageSelector';
 import LeftPanel from './components/LeftPanel';
 import CodeDisplay from './components/CodeDisplay';
@@ -74,24 +73,17 @@ function App() {
                     <LeftPanel stepContent={stepContent} />
 
                     <div className="step-code-section">
-                        <div className="step-code-header-controls">
-                            <CategoryTabs
-                                activeCategory={activeCategory}
-                                onCategoryChange={setActiveCategory}
-                                activeStep={activeStep}
-                            />
-                            <LanguageSelector
-                                activeLanguage={activeLanguage}
-                                onLanguageChange={setActiveLanguage}
-                            />
-                        </div>
-
                         <CodeDisplay
                             key={`${activeCategory}-${activeLanguage}`}
                             code={currentCode}
                             language={activeLanguage}
                             highlightLines={highlightLines}
                             filename={getFilename()}
+                            activeLanguage={activeLanguage}
+                            onLanguageChange={setActiveLanguage}
+                            activeCategory={activeCategory}
+                            onCategoryChange={setActiveCategory}
+                            activeStep={activeStep}
                         />
                     </div>
                 </div>

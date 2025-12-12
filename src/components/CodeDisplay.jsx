@@ -1,9 +1,11 @@
 import React, { useEffect, useRef } from 'react';
 import { Highlight, themes } from 'prism-react-renderer';
 import { FiCopy, FiCheck } from 'react-icons/fi';
+import LanguageSelector from './LanguageSelector';
+import CategoryTabs from './CategoryTabs';
 import './CodeDisplay.css';
 
-const CodeDisplay = React.memo(({ code, language, highlightLines, filename }) => {
+const CodeDisplay = React.memo(({ code, language, highlightLines, filename, activeLanguage, onLanguageChange, activeCategory, onCategoryChange, activeStep }) => {
     const [copied, setCopied] = React.useState(false);
     const highlightRefs = useRef({});
 
@@ -46,14 +48,25 @@ const CodeDisplay = React.memo(({ code, language, highlightLines, filename }) =>
     return (
         <div className="step-code-display">
             <div className="step-code-header">
-                <div className="step-code-filename">{filename}</div>
+                <CategoryTabs
+                    activeCategory={activeCategory}
+                    onCategoryChange={onCategoryChange}
+                    activeStep={activeStep}
+                />
                 <div className="step-code-actions">
+                    <LanguageSelector
+                        activeLanguage={activeLanguage}
+                        onLanguageChange={onLanguageChange}
+                    />
+                </div>
+            </div>
+            <div className="step-code-content">
+                <div className="step-code-inner-header">
+                    <div className="step-code-filename-tab">{filename}</div>
                     <button className="step-copy-btn" onClick={handleCopy}>
                         {copied ? <FiCheck /> : <FiCopy />}
                     </button>
                 </div>
-            </div>
-            <div className="step-code-content">
                 <Highlight
                     theme={themes.nightOwl}
                     code={code}
