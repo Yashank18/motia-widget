@@ -47,23 +47,6 @@ function App() {
     // Get step content for left panel
     const stepContent = stepDescriptions[activeStep] || {};
 
-    // Generate filename based on category and language
-    const getFilename = () => {
-        // Map category to base filename
-        const categoryMap = {
-            'api-streams': 'api.step',
-            'event-streams': 'event.step',
-            'cron-streams': 'cron.step'
-        };
-        const baseName = categoryMap[activeCategory] || 'step';
-        const extensions = {
-            typescript: '.ts',
-            python: '.py',
-            javascript: '.js'
-        };
-        return `${baseName}${extensions[activeLanguage]}`;
-    };
-
     return (
         <div className="step-app">
             <StepNavigation activeStep={activeStep} onStepChange={setActiveStep} />
@@ -78,12 +61,10 @@ function App() {
                             code={currentCode}
                             language={activeLanguage}
                             highlightLines={highlightLines}
-                            filename={getFilename()}
                             activeLanguage={activeLanguage}
                             onLanguageChange={setActiveLanguage}
                             activeCategory={activeCategory}
                             onCategoryChange={setActiveCategory}
-                            activeStep={activeStep}
                         />
                     </div>
                 </div>

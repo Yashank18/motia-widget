@@ -40,23 +40,29 @@
 
 .step-code-inner-header {
     display: flex;
-    align-items: flex-end;
-    gap: 0;
-    padding: 0;
-    padding-left: 16px;
-    padding-top: 8px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 16px 0 16px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     background: rgba(0, 0, 0, 0.2);
-    flex-wrap: wrap;
     min-height: 36px;
 }
 
+.step-code-filename-group {
+    display: flex;
+    gap: 6px;
+    align-items: flex-end;
+}
+
 .step-code-filename-tab {
+    border: none;
+    outline: none;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.04);
     font-size: 12px;
     color: rgba(255, 255, 255, 0.9);
     font-family: 'Monaco', 'Menlo', monospace;
     padding: 8px 16px;
-    background: rgba(255, 255, 255, 0.08);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-bottom: none;
     border-radius: 6px 6px 0 0;
@@ -64,6 +70,17 @@
     position: relative;
     margin-bottom: -1px;
     display: inline-block;
+}
+
+.step-code-filename-tab.active {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.step-code-language {
+    display: flex;
+    align-items: center;
+    margin-bottom: 4px;
 }
 
 .step-code-actions {

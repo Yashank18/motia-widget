@@ -2,10 +2,9 @@ import React, { useEffect, useRef } from 'react';
 import { Highlight, themes } from 'prism-react-renderer';
 import { FiCopy, FiCheck } from 'react-icons/fi';
 import LanguageSelector from './LanguageSelector';
-import CategoryTabs from './CategoryTabs';
 import './CodeDisplay.css';
 
-const CodeDisplay = React.memo(({ code, language, highlightLines, filename, activeLanguage, onLanguageChange, activeCategory, onCategoryChange, activeStep }) => {
+const CodeDisplay = React.memo(({ code, language, highlightLines, activeLanguage, onLanguageChange, activeCategory, onCategoryChange }) => {
     const [copied, setCopied] = React.useState(false);
     const highlightRefs = useRef({});
 
@@ -45,24 +44,44 @@ const CodeDisplay = React.memo(({ code, language, highlightLines, filename, acti
         return langMap[lang] || 'javascript';
     };
 
+    const getCategoryFileTabs = () => {
+        const extensions = {
+            typescript: '.ts',
+            python: '.py',
+            javascript: '.js'
+        };
+
+        const ext = extensions[activeLanguage] || '.ts';
+
+        return [
+            { id: 'api-streams', label: `api.step${ext}` },
+            { id: 'event-streams', label: `event.step${ext}` },
+            { id: 'cron-streams', label: `cron.step${ext}` }
+        ];
+    };
+
     return (
         <div className="step-code-display">
-            <div className="step-code-header">
-                <CategoryTabs
-                    activeCategory={activeCategory}
-                    onCategoryChange={onCategoryChange}
-                    activeStep={activeStep}
-                />
-                <div className="step-code-actions">
-                    <LanguageSelector
-                        activeLanguage={activeLanguage}
-                        onLanguageChange={onLanguageChange}
-                    />
-                </div>
-            </div>
             <div className="step-code-content">
                 <div className="step-code-inner-header">
-                    <div className="step-code-filename-tab">{filename}</div>
+                    <div className="step-code-filename-group">
+                        {getCategoryFileTabs().map(tab => (
+                            <button
+                                key={tab.id}
+                                type="button"
+                                className={`step-code-filename-tab ${activeCategory === tab.id ? 'active' : ''}`}
+                                onClick={() => onCategoryChange(tab.id)}
+                            >
+                                {tab.label}
+                            </button>
+                        ))}
+                    </div>
+                    <div className="step-code-language">
+                        <LanguageSelector
+                            activeLanguage={activeLanguage}
+                            onLanguageChange={onLanguageChange}
+                        />
+                    </div>
                 </div>
                 <div className="step-code-wrapper">
                     <button className="step-copy-btn" onClick={handleCopy}>
