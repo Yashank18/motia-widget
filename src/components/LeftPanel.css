@@ -92,6 +92,13 @@
     line-height: 1.6;
 }
 
+/* Mobile - hide left panel */
+@media (max-width: 786px) {
+    .step-left-panel {
+        display: none;
+    }
+}
+
 /* Tablet and below */
 @media (max-width: 768px) {
     .step-left-panel {

@@ -87,6 +87,18 @@ body {
     }
 }
 
+/* Mobile - hide left panel, show only code */
+@media (max-width: 786px) {
+    .step-content-body {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .step-left-panel {
+        display: none;
+    }
+}
+
 /* Tablet and below - stack vertically */
 @media (max-width: 768px) {
     .step-app-content {
