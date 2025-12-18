@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import StepNavigation from './components/StepNavigation';
 import LanguageSelector from './components/LanguageSelector';
 import LeftPanel from './components/LeftPanel';
@@ -12,6 +12,18 @@ function App() {
     const [activeStep, setActiveStep] = useState('trigger');
     const [activeCategory, setActiveCategory] = useState('api-streams');
     const [activeLanguage, setActiveLanguage] = useState('typescript');
+    const [isMobile, setIsMobile] = useState(false);
+
+    // Detect mobile view (under 786px)
+    useEffect(() => {
+        const checkMobile = () => {
+            setIsMobile(window.innerWidth <= 786);
+        };
+        
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
 
     // Get current code snippet - same code for all steps, only depends on category and language
     const currentCode = React.useMemo(() => {
@@ -37,12 +49,17 @@ function App() {
     }, [activeCategory, activeLanguage]);
 
     // Get highlight lines for current step, category, and language
+    // Disable highlights on mobile (under 786px)
     // Always create a new array to ensure React detects changes
     const highlightLines = React.useMemo(() => {
+        // Return empty array on mobile to disable highlights
+        if (isMobile) {
+            return [];
+        }
         const stepHighlights = highlightRanges[activeCategory]?.[activeStep];
         const lines = stepHighlights?.[activeLanguage];
         return lines ? [...lines] : [];
-    }, [activeCategory, activeStep, activeLanguage]);
+    }, [activeCategory, activeStep, activeLanguage, isMobile]);
 
     // Get step content for left panel
     const stepContent = stepDescriptions[activeStep] || {};
