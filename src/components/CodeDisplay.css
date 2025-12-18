@@ -185,8 +185,7 @@
 .step-line-content {
     flex: 1;
     min-width: 0;
-    overflow-x: auto;
-    overflow-y: visible;
+    overflow: visible;
 }
 
 /* Custom scrollbar */
