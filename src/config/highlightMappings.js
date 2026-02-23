@@ -4,9 +4,9 @@
 export const highlightRanges = {
     'api-streams': {
         trigger: {
-            typescript: [3, 4, 5, 6, 7],   // config: name, triggers, enqueues, flows
-            javascript: [2, 3, 4, 5],
-            python: [2, 3, 4, 5]
+            typescript: [5],   // config: name, triggers, enqueues, flows
+            javascript: [3],
+            python: [3]
         },
         handler: {
             typescript: [10, 11, 12, 13, 14, 15, 16, 17, 18],
