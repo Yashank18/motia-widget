@@ -3,32 +3,32 @@
 
 export const codeSnippets = {
   'api-streams': {
-    typescript: `import { ApiRouteConfig, Handlers } from 'motia'
+    typescript: `import { StepConfig, Handlers } from 'motia'
 
-export const config: ApiRouteConfig = {
+export const config: StepConfig = {
   name: 'SendMessage',
-  type: 'api',
+  triggers: [{ type: 'http' }],
   path: '/messages',
-  method: 'POST', 
-  emits: ['message.sent'],
+  method: 'POST',
+  enqueues: ['message.sent'],
   flows: ['messaging']
 }
 
-export const handler: Handlers['SendMessage'] = async (req, { emit, logger, state, streams }) => {
+export const handler: Handlers<typeof config> = async (req, { enqueue, logger, state, streams }) => {
   const { text, userId } = req.body
   const message = { text, userId, status: 'sent' }
   await state.set('messages', userId, message)
   await streams.messages.set(userId, message)
   logger.info('Message sent', { userId })
-  await emit({ topic: 'message.sent', data: message })
+  await enqueue({ topic: 'message.sent', data: message })
   return { status: 201, body: message }
 }`,
     python: `config = {
-    name: 'SendMessage',
-    type: 'api',
-    path: '/messages',
+    "name": "SendMessage",
+    "triggers": [{"type": "http"}],
+    "path": "/messages",
     "method": "POST",
-    "emits": ["message.sent"],
+    "enqueues": ["message.sent"],
     "flows": ["messaging"]
 }
 
@@ -39,51 +39,49 @@ async def handler(req, context):
     await context.state.set("messages", user_id, message)
     await context.streams.messages.set(user_id, message)
     context.logger.info("Message sent", {"userId": user_id})
-    await context.emit({"topic": "message.sent", "data": message})
+    await context.enqueue({"topic": "message.sent", "data": message})
     return {"status": 201, "body": message}`,
     javascript: `exports.config = {
   name: 'SendMessage',
-  type: 'api',
+  triggers: [{ type: 'http' }],
   path: '/messages',
   method: 'POST',
-  emits: ['message.sent'],
+  enqueues: ['message.sent'],
   flows: ['messaging']
 }
 
-exports.handler = async (req, { emit, logger, state, streams }) => {
+exports.handler = async (req, { enqueue, logger, state, streams }) => {
   const { text, userId } = req.body
   const message = { text, userId, status: 'sent' }
   await state.set('messages', userId, message)
   await streams.messages.set(userId, message)
   logger.info('Message sent', { userId })
-  await emit({ topic: 'message.sent', data: message })
+  await enqueue({ topic: 'message.sent', data: message })
   return { status: 201, body: message }
 }`
   },
   'event-streams': {
-    typescript: `import { EventConfig, Handlers } from 'motia'
+    typescript: `import { StepConfig, Handlers } from 'motia'
 
-export const config: EventConfig = {
+export const config: StepConfig = {
   name: 'ProcessMessage',
-  type: 'event',
-  subscribes: ['message.sent'],
-  emits: ['message.processed'],
+  triggers: [{ type: 'queue', topic: 'message.sent' }],
+  enqueues: ['message.processed'],
   flows: ['messaging']
 }
 
-export const handler: Handlers['ProcessMessage'] = async (input, { emit, logger, state, streams }) => {
+export const handler: Handlers<typeof config> = async (input, { enqueue, logger, state, streams }) => {
   const { text, userId, status } = input
   const processedMessage = { text, userId, status: 'processed' }
   await state.set('processed', userId, processedMessage)
   await streams.processed.set(userId, processedMessage)
   logger.info('Message processed', { userId })
-  await emit({ topic: 'message.processed', data: processedMessage })
+  await enqueue({ topic: 'message.processed', data: processedMessage })
 }`,
     python: `config = {
     "name": "ProcessMessage",
-    type: 'event',
-    "subscribes": ["message.sent"],
-    "emits": ["message.processed"],
+    "triggers": [{"type": "queue", "topic": "message.sent"}],
+    "enqueues": ["message.processed"],
     "flows": ["messaging"]
 }
 
@@ -95,48 +93,45 @@ async def handler(input_data, context):
     await context.state.set("processed", user_id, processed_message)
     await context.streams.processed.set(user_id, processed_message)
     context.logger.info("Message processed", {"userId": user_id})
-    await context.emit({ "topic": "message.processed", "data": processed_message })`,
+    await context.enqueue({"topic": "message.processed", "data": processed_message})`,
     javascript: `exports.config = {
   name: 'ProcessMessage',
-  type: 'event',
-  subscribes: ['message.sent'],
-  emits: ['message.processed'],
+  triggers: [{ type: 'queue', topic: 'message.sent' }],
+  enqueues: ['message.processed'],
   flows: ['messaging']
 }
 
-exports.handler = async (input, { emit, logger, state, streams }) => {
+exports.handler = async (input, { enqueue, logger, state, streams }) => {
   const { text, userId, status } = input
   const processedMessage = { text, userId, status: 'processed' }
   await state.set('processed', userId, processedMessage)
   await streams.processed.set(userId, processedMessage)
   logger.info('Message processed', { userId })
-  await emit({ topic: 'message.processed', data: processedMessage })
+  await enqueue({ topic: 'message.processed', data: processedMessage })
 }`
   },
   'cron-streams': {
-    typescript: `import { CronConfig, Handlers } from 'motia'
+    typescript: `import { StepConfig, Handlers } from 'motia'
 
-export const config: CronConfig = {
+export const config: StepConfig = {
   name: 'DailySummary',
-  type: 'cron',
-  cron: '0 9 * * *',
-  emits: ['summary.generated'],
+  triggers: [{ type: 'cron', expression: '0 9 * * *' }],
+  enqueues: ['summary.generated'],
   flows: ['messaging']
 }
 
-export const handler: Handlers['DailySummary'] = async ({ emit, state, logger, streams }) => {
+export const handler: Handlers<typeof config> = async ({ enqueue, state, logger, streams }) => {
   const messages = await state.getGroup('messages')
   const summary = { total: messages.length, status: 'completed' }
   await state.set('summaries', 'daily', summary)
   await streams.summary.set('latest', summary)
   logger.info('Daily summary generated', { total: summary.total })
-  await emit({ topic: 'summary.generated', data: summary })
+  await enqueue({ topic: 'summary.generated', data: summary })
 }`,
     python: `config = {
     "name": "DailySummary",
-    type: 'cron',
-    "cron": "0 9 * * *",
-    "emits": ["summary.generated"],
+    "triggers": [{"type": "cron", "expression": "0 9 * * *"}],
+    "enqueues": ["summary.generated"],
     "flows": ["messaging"]
 }
 
@@ -146,22 +141,21 @@ async def handler(context):
     await context.state.set("summaries", "daily", summary)
     await context.streams.summary.set("latest", summary)
     context.logger.info("Daily summary generated", {"total": summary["total"]})
-    await context.emit({  "topic": "summary.generated", "data": summary })`,
+    await context.enqueue({"topic": "summary.generated", "data": summary})`,
     javascript: `exports.config = {
   name: 'DailySummary',
-  type: 'cron',
-  cron: '0 9 * * *',
-  emits: ['summary.generated'],
+  triggers: [{ type: 'cron', expression: '0 9 * * *' }],
+  enqueues: ['summary.generated'],
   flows: ['messaging']
 }
 
-exports.handler = async ({ emit, state, logger, streams }) => {
+exports.handler = async ({ enqueue, state, logger, streams }) => {
   const messages = await state.getGroup('messages')
   const summary = { total: messages.length, status: 'completed' }
   await state.set('summaries', 'daily', summary)
   await streams.summary.set('latest', summary)
   logger.info('Daily summary generated', { total: summary.total })
-  await emit({ topic: 'summary.generated', data: summary })
+  await enqueue({ topic: 'summary.generated', data: summary })
 }`
   }
 };
