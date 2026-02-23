@@ -11,14 +11,14 @@ export const stepDescriptions = {
     handler: {
         title: 'Handler - How It Performs Logic',
         description: '',
-        details: 'This is where your business logic lives. The `handler` function receives input data and a context object with everything you need: `logger` for tracking, `emit` for triggering other Steps, `state` for storing data, and `streams` for real-time updates',
+        details: 'This is where your business logic lives. The `handler` function receives input data and a context object with everything you need: `logger` for tracking, `enqueue` for triggering other Steps, `state` for storing data, and `streams` for real-time updates',
         docsLink: 'https://www.motia.dev/docs/concepts/steps#handler-configuration',
         autoDiscovery: 'Motia automatically discovers any file ending in `.step.ts`, `.step.js`, or `.step.py`. The filename tells Motia to load it, and the name in the config uniquely identifies the Step inside your system.'
     },
     emit: {
         title: 'Emit - How It Outputs Data',
         description: '',
-        details: 'Send data to other Steps using `await emit({ topic: event.name, data: {...} })`. Any Step that subscribes to that topic will receive your data and run automatically. This is how Steps talk to each other.',
+        details: 'Send data to other Steps using `await enqueue({ topic: event.name, data: {...} })`. Any Step that subscribes to that topic will receive your data and run automatically. This is how Steps talk to each other.',
         docsLink: 'https://www.motia.dev/docs/concepts/steps#steps-work-together-emit--subscribe',
         autoDiscovery: 'Motia automatically discovers any file ending in `.step.ts`, `.step.js`, or `.step.py`. The filename tells Motia to load it, and the name in the config uniquely identifies the Step inside your system.'
     },
