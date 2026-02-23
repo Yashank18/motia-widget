@@ -3,16 +3,14 @@
 
 export const codeSnippets = {
   'api-streams': {
-    typescript: `import { StepConfig, Handlers } from 'motia'
+    typescript: `import { type Handlers, type StepConfig } from 'motia'
 
-export const config: StepConfig = {
+export const config = {
   name: 'SendMessage',
-  triggers: [{ type: 'http' }],
-  path: '/messages',
-  method: 'POST',
+  triggers: [{ type: 'http', path: '/messages', method: 'POST' }],
   enqueues: ['message.sent'],
-  flows: ['messaging']
-}
+  flows: ['messaging'],
+} as const satisfies StepConfig
 
 export const handler: Handlers<typeof config> = async (req, { enqueue, logger, state, streams }) => {
   const { text, userId } = req.body
@@ -25,9 +23,7 @@ export const handler: Handlers<typeof config> = async (req, { enqueue, logger, s
 }`,
     python: `config = {
     "name": "SendMessage",
-    "triggers": [{"type": "http"}],
-    "path": "/messages",
-    "method": "POST",
+    "triggers": [{"type": "http", "path": "/messages", "method": "POST"}],
     "enqueues": ["message.sent"],
     "flows": ["messaging"]
 }
@@ -43,9 +39,7 @@ async def handler(req, context):
     return {"status": 201, "body": message}`,
     javascript: `exports.config = {
   name: 'SendMessage',
-  triggers: [{ type: 'http' }],
-  path: '/messages',
-  method: 'POST',
+  triggers: [{ type: 'http', path: '/messages', method: 'POST' }],
   enqueues: ['message.sent'],
   flows: ['messaging']
 }
@@ -61,14 +55,14 @@ exports.handler = async (req, { enqueue, logger, state, streams }) => {
 }`
   },
   'event-streams': {
-    typescript: `import { StepConfig, Handlers } from 'motia'
+    typescript: `import { type Handlers, type StepConfig } from 'motia'
 
-export const config: StepConfig = {
+export const config = {
   name: 'ProcessMessage',
   triggers: [{ type: 'queue', topic: 'message.sent' }],
   enqueues: ['message.processed'],
-  flows: ['messaging']
-}
+  flows: ['messaging'],
+} as const satisfies StepConfig
 
 export const handler: Handlers<typeof config> = async (input, { enqueue, logger, state, streams }) => {
   const { text, userId, status } = input
@@ -111,14 +105,14 @@ exports.handler = async (input, { enqueue, logger, state, streams }) => {
 }`
   },
   'cron-streams': {
-    typescript: `import { StepConfig, Handlers } from 'motia'
+    typescript: `import { type Handlers, type StepConfig } from 'motia'
 
-export const config: StepConfig = {
+export const config = {
   name: 'DailySummary',
   triggers: [{ type: 'cron', expression: '0 9 * * *' }],
   enqueues: ['summary.generated'],
-  flows: ['messaging']
-}
+  flows: ['messaging'],
+} as const satisfies StepConfig
 
 export const handler: Handlers<typeof config> = async ({ enqueue, state, logger, streams }) => {
   const messages = await state.getGroup('messages')
